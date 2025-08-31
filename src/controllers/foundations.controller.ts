@@ -40,3 +40,15 @@ export const updateFoundationColorController: AppController = async (
     throw err;
   }
 };
+
+export const updateFoundationComponentController: AppController = async (
+  req,
+  res
+) => {
+  const { component } = req.body ?? { component: null };
+  if (!component) {
+    throw new AppError("Invalid 'component' body data.", "BAD_REQUEST");
+  }
+  try {
+  } catch (err) {}
+};

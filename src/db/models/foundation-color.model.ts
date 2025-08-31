@@ -1,4 +1,5 @@
 import { model, Schema, InferSchemaType } from "mongoose";
+import { FOUNDATION_COLOR_IMMUTABLE_COLLECTION_ID } from "../../consts/db.const";
 
 const HEX_REGEX = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/;
 
@@ -21,7 +22,11 @@ export type BaseColorDocument = Record<
 
 const FoundationColorSchema = new Schema(
   {
-    _id: { type: String, default: "foundation-color", immutable: true }, // ← 고정
+    _id: {
+      type: String,
+      default: FOUNDATION_COLOR_IMMUTABLE_COLLECTION_ID,
+      immutable: true,
+    },
     baseColor: {
       type: Map,
       of: ColorScaleSchema,
