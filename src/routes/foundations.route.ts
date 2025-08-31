@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { updateFoundationColor } from "../controllers/foundations.controller";
+import { updateFoundationColorController } from "../controllers/foundations.controller";
 
 const foundationsRoute = Router();
 
-foundationsRoute.put("/color", updateFoundationColor);
+foundationsRoute.put("/color", updateFoundationColorController);
 
 export default foundationsRoute;

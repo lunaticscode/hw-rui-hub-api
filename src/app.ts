@@ -1,4 +1,5 @@
 import express from "express";
+import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import compression from "compression";
 import { APP_PORT } from "./consts/app.const";
@@ -13,10 +14,10 @@ const rateLiimter = rateLimit({
 });
 
 const app = express();
-
+app.use(helmet());
 app.use(rateLiimter);
 app.use(userAgentMiddleware());
-app.use(express.static("public"));
+app.use(express.static("public", { dotfiles: "ignore", etag: true }));
 app.use(express.json());
 app.use(compression());
 
