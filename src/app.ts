@@ -14,6 +14,17 @@ const rateLiimter = rateLimit({
 });
 
 const app = express();
+if (process.env.NODE_ENV !== "production") {
+  app.use((_, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+    res.setHeader("Access-Control-Allow-Methods", "GET, PUT");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    next();
+  });
+}
 app.use(helmet());
 app.use(rateLiimter);
 app.use(userAgentMiddleware());
