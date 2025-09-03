@@ -13,27 +13,21 @@ const rateLiimter = rateLimit({
   limit: 45, // each IP to 45 requests per 1 min
 });
 
-const DEVELOPMENT_CLIENT_URLS = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-];
-const PRODUCTION_CLIENT_URLS = ["https://rui.hw-lab.site"];
+const DEVELOPMENT_CLIENT_URL = "http://localhost:5173";
+const PRODUCTION_CLIENT_URL = "https://rui.hw-lab.site";
+const CORS_ALLOW_ORIGIN =
+  process.env.NODE_ENV === "production"
+    ? PRODUCTION_CLIENT_URL
+    : DEVELOPMENT_CLIENT_URL;
+
 const app = express();
-if (process.env.NODE_ENV !== "production") {
-  app.use((_, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", [
-      ...DEVELOPMENT_CLIENT_URLS,
-      ...PRODUCTION_CLIENT_URLS,
-    ]);
-    res.setHeader("Access-Control-Allow-Methods", "GET, PUT");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
-    next();
-  });
-}
+app.use((_, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", CORS_ALLOW_ORIGIN);
+  res.setHeader("Access-Control-Allow-Methods", "GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 app.use(helmet());
 app.use(rateLiimter);
 app.use(userAgentMiddleware());
