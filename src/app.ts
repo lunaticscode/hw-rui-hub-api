@@ -13,10 +13,19 @@ const rateLiimter = rateLimit({
   limit: 45, // each IP to 45 requests per 1 min
 });
 
+const DEVELOPMENT_CLIENT_URLS = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+];
+const PRODUCTION_CLIENT_URLS = ["https://rui.hw-lab.site"];
 const app = express();
 if (process.env.NODE_ENV !== "production") {
   app.use((_, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+    res.setHeader("Access-Control-Allow-Origin", [
+      ...DEVELOPMENT_CLIENT_URLS,
+      ...PRODUCTION_CLIENT_URLS,
+    ]);
     res.setHeader("Access-Control-Allow-Methods", "GET, PUT");
     res.setHeader(
       "Access-Control-Allow-Headers",
