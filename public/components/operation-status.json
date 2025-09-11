@@ -1,1 +1,1 @@
-{"installable":["accordion","button","carousel"]}
+{"installable":{"accordion":false,"button":false,"calendar":true,"carousel":true,"popover":false,"select":true,"tabs":true,"toast":false}}

@@ -23,16 +23,20 @@ const CORS_ALLOW_ORIGIN =
 const app = express();
 app.use((_, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", CORS_ALLOW_ORIGIN);
-  res.setHeader("Access-Control-Allow-Methods", "GET, PUT");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, get, PATCH, patch, PUT, put"
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
 app.use(helmet());
 app.use(rateLiimter);
-app.use(userAgentMiddleware());
-app.use(express.static("public", { dotfiles: "ignore", etag: true }));
 app.use(express.json());
+app.use(userAgentMiddleware());
+
+app.use(express.static("public", { dotfiles: "ignore", etag: true }));
 app.use(compression());
 
 app.use("/api", apiRoute);
