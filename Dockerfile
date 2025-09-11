@@ -11,4 +11,4 @@ WORKDIR /app
 COPY --from=builder /app/dist-ncc ./
 COPY .env .env
 EXPOSE 8085
-CMD ["node", "index.js"]
+CMD ["NODE_ENV=production", "node", "index.js"]

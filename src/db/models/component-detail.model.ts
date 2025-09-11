@@ -1,23 +1,20 @@
 import { Schema, model, Document } from "mongoose";
-const ComponentTypes = [
-  "button",
-  "accordion",
-  "calendar",
-  "carousel",
-  "select",
-  "tabs",
-  "toast",
-] as const;
 
-export interface ComponentDetailDocument extends Document {
-  name: (typeof ComponentTypes)[number];
+export interface ComponentDetailFields {
+  name: string;
   version: string;
+  description: string;
+  tags: string;
   dependencies?: Record<string, string>;
 }
 
+export interface ComponentDetailDocument
+  extends Document,
+    ComponentDetailFields {}
+
 const ComponentDetailSchema = new Schema<ComponentDetailDocument>(
   {
-    name: { type: String, required: true, enum: ComponentTypes },
+    name: { type: String, required: true },
     version: { type: String, required: true },
     dependencies: { type: Map, of: String, default: {} },
   },
@@ -25,6 +22,6 @@ const ComponentDetailSchema = new Schema<ComponentDetailDocument>(
 );
 
 export const FoundationComponentDetailModel = model<ComponentDetailDocument>(
-  "Foundation-Component-Detail",
+  "Component-Detail",
   ComponentDetailSchema
 );

@@ -1,3 +1,4 @@
+import { FOUNDATION_COLOR_IMMUTABLE_COLLECTION_ID } from "../consts/db.const";
 import FoundationColorModel, {
   BaseColorDocument,
 } from "../db/models/foundation-color.model";
@@ -15,9 +16,12 @@ export const updateFoundationColor = async (baseColor: BaseColorDocument) => {
 
     await FoundationColorModel.findOneAndUpdate(
       {
-        _id: "foundation-color",
+        _id: FOUNDATION_COLOR_IMMUTABLE_COLLECTION_ID,
       },
-      { $set: baseColor, $setOnInsert: { _id: "foundation-color" } },
+      {
+        $set: baseColor,
+        $setOnInsert: { _id: FOUNDATION_COLOR_IMMUTABLE_COLLECTION_ID },
+      },
       { upsert: true }
     );
     return true;

@@ -8,7 +8,7 @@ import { AppError } from "../utils/error";
 import { BaseColorDocument } from "../db/models/foundation-color.model";
 import { updateFoundationColor } from "../services/foundations.service";
 
-const updateBaseColorStaticFile = (baseColor: BaseColorDocument) => {
+const generateBaseColorStaticFile = (baseColor: BaseColorDocument) => {
   try {
     const foundationsDir = join(APP_STATIC_DIR, APP_STATIC_FOUNDATIONS_DIR);
     if (!existsSync(foundationsDir)) {
@@ -32,23 +32,18 @@ export const updateFoundationColorController: AppController = async (
     throw new AppError("Invalid 'color' body data.", "BAD_REQUEST");
   }
   try {
-    updateFoundationColor(baseColor);
-    updateBaseColorStaticFile(baseColor);
-    return res.json({ isError: false });
+    const updateResult = await updateFoundationColor(baseColor);
+    if (updateResult) {
+      generateBaseColorStaticFile(baseColor);
+      return res.json({ isError: false });
+    } else {
+      throw new AppError(
+        "Occured update error at Foundation color.",
+        "UNKNOWN_ERROR"
+      );
+    }
   } catch (err) {
     console.error(err);
     throw err;
   }
-};
-
-export const updateFoundationComponentController: AppController = async (
-  req,
-  res
-) => {
-  const { component } = req.body ?? { component: null };
-  if (!component) {
-    throw new AppError("Invalid 'component' body data.", "BAD_REQUEST");
-  }
-  try {
-  } catch (err) {}
 };

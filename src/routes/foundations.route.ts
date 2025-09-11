@@ -3,6 +3,10 @@ import { updateFoundationColorController } from "../controllers/foundations.cont
 
 const foundationsRoute = Router();
 
-foundationsRoute.put("/color", updateFoundationColorController);
+foundationsRoute.put(
+  "/color",
+  /** +) admin validation middleware */
+  updateFoundationColorController
+);
 
 export default foundationsRoute;

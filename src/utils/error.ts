@@ -2,6 +2,7 @@ type ErrorCodes =
   | "UNKNOWN_ERROR"
   | "FAIL_TO_CONNECT_DB"
   | "BAD_REQUEST"
+  | "INTERNAL_SERVER_ERROR"
   | "INVALID_USER_AGENT"
   | "INVALID_USER_TOKEN";
 
@@ -14,6 +15,9 @@ const ERROR_CODES: Record<ErrorCodes, { statusCode: number }> = {
   },
   BAD_REQUEST: {
     statusCode: 400,
+  },
+  INTERNAL_SERVER_ERROR: {
+    statusCode: 500,
   },
   INVALID_USER_AGENT: {
     statusCode: 403,
