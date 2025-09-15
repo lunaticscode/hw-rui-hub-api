@@ -35,7 +35,6 @@ app.use(helmet());
 app.use(rateLiimter);
 app.use(express.json());
 app.use(userAgentMiddleware());
-
 app.use(express.static("public", { dotfiles: "ignore", etag: true }));
 app.use(compression());
 
@@ -45,6 +44,6 @@ app.use(errorMiddleware);
 
 app.listen(APP_PORT, () => {
   dbConnect();
-  console.log(process.env.NODE_ENV);
+  console.log("NODE_ENV :: ", process.env.NODE_ENV ?? "development");
   console.log(`✅[express] Express running on ${APP_PORT}.`);
 });

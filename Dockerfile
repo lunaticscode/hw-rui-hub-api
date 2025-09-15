@@ -10,5 +10,6 @@ FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app/dist-ncc ./
 COPY .env .env
+ENV NODE_ENV production
 EXPOSE 8085
-CMD ["NODE_ENV=production", "node", "index.js"]
+CMD ["node", "index.js"]
