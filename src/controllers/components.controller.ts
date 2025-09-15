@@ -66,7 +66,7 @@ export const updateComponentPromptMetadataController: AppController = async (
   try {
     const updateResult = await updateComponentPromptMetadata(body);
     if (updateResult) {
-      generateStaticFile(body, "prompt-metadata,json");
+      generateStaticFile(body, "prompt-metadata.json");
       return res.json({ isError: false });
     } else {
       throw new AppError(
